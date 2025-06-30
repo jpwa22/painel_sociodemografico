@@ -100,7 +100,5 @@ cor_pcd |> group_by(Variável, Tipos.de.dificuldades.funcionais ) |> summarise(T
 pcd |> group_by(Variável) |> summarise(Total = sum(as.numeric(Valor) , na.rm = TRUE))
 
 
-
-
-
-
+# Tabelas do Sidra
+tabelas <- read_excel("docs/pcd_aux.xlsx", sheet = "tabelas")
