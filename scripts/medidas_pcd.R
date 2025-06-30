@@ -82,9 +82,9 @@ write_xlsx(df_final,"dados_brutos/pcd/def.xlsx")
 df_final <- concatenar_planilhas_com_log("dados_brutos/pcd/Taxa de analfabetismo de pessoas com deficiência")
 df_final <- df_final %>% distinct()
 write_xlsx(df_final,"dados_brutos/pcd/analfabetismo_pcd.xlsx")
+
+
 # csv ---------------------------------------------------------------------
-
-
 
 
 cor_pcd <- read_csv2("dados_brutos/pcd/cor_pcd.csv")
