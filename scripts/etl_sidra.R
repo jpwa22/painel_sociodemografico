@@ -18,27 +18,30 @@ municipios <- get_municipios_pe()
 # Deficiência ------------------------------------------------------------
 
 
-tabela <- as.character("10125") #   Tabela 10125 - Pessoas residentes de 2 anos ou mais de idade, total e pessoas com deficiência, por sexo e grupos de idade
+#   Tabela 10125 - Pessoas residentes de 2 anos ou mais de idade, total e pessoas com deficiência, por sexo e grupos de idade
+tabela <- as.character("10125") 
 #### Grupo de Idade 
 "3302,73770,104578" # 2,15,59 (3 faixas)
 faixa_etaria <- "1143,1144,1145,1146,1147,1148,1149,1150,1151,3302,73770" # Várias
 
-
+"https://apisidra.ibge.gov.br/values/t/10125/n1/all/n6/1100015/v/11852,12785/p/all/c2/all/c58/1143,1144,1145,1146,1147,1148,1149,1150,1151,3302,73770"
 for (i in seq_len(nrow(municipios))) {
   
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
-  url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/11852,12785/p/last/c2/6794/c58/",faixa_etaria)
+  #url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/11852,12785/p/last/c2/6794/c58/",faixa_etaria)
+  url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/11852,12785/p/all/c2/all/c58/1143,1144,1145,1146,1147,1148,1149,1150,1151,3302,73770")
   resposta <- GET(url)
   conteudo <- content(resposta, as = "text", encoding = "UTF-8")
   dados_json <- fromJSON(conteudo)
   write.csv2(dados_json,paste("dados_brutos/pcd/sidra/pcd_",tabela,"_",trimws(cod_mun),".csv"))
 }
 
+
 "https://apisidra.ibge.gov.br/values/t/10127/n1/all/n6/2600054/v/11852,12785/p/all/c1509/73771,73772,73773,73789,73790"
 
-tabela <- as.character("10127") # Tabela 10127 - Pessoas residentes de 2 anos ou mais de idade com deficiência por tipos de dificuldades funcionais
-
+# Tabela 10127 - Pessoas residentes de 2 anos ou mais de idade com deficiência por tipos de dificuldades funcionais
+tabela <- as.character("10127") 
 for (i in seq_len(nrow(municipios))) {
   
   cod_mun <- municipios$codigo_ibge[i]
@@ -47,7 +50,7 @@ for (i in seq_len(nrow(municipios))) {
   resposta <- GET(url)
   conteudo <- content(resposta, as = "text", encoding = "UTF-8")
   dados_json <- fromJSON(conteudo)
-  write.csv2(dados_json,paste("dados_brutos/pcd/cor_pcd_",tabela,"_",trimws(cod_mun),".csv"))
+  write.csv2(dados_json,paste("dados_brutos/pcd/sidra/pcd_",tabela,"_",trimws(cod_mun),".csv"))
 }
 
 # Taxa de escolarização das pessoas de 6 anos ou mais de idade, por sexo, grupos de idade e existência de deficiência
