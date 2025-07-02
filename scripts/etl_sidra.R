@@ -19,18 +19,34 @@ municipios <- get_municipios_pe()
 
 
 #   Tabela 10125 - Pessoas residentes de 2 anos ou mais de idade, total e pessoas com deficiência, por sexo e grupos de idade
-tabela <- as.character("10125") 
-#### Grupo de Idade 
-"3302,73770,104578" # 2,15,59 (3 faixas)
-faixa_etaria <- "1143,1144,1145,1146,1147,1148,1149,1150,1151,3302,73770" # Várias
+tabela <- as.character("10125")
+#### Grupo de Idade
+# "3302,73770,104578" # 2,15,59 (3 faixas)
+# faixa_etaria <- "1143,1144,1145,1146,1147,1148,1149,1150,1151,3302,73770" # Várias
 
-"https://apisidra.ibge.gov.br/values/t/10125/n1/all/n6/1100015/v/11852,12785/p/all/c2/all/c58/1143,1144,1145,1146,1147,1148,1149,1150,1151,3302,73770"
+"https://apisidra.ibge.gov.br/values/t/10125/n1/all/n6/1100015/v/11852,12785/p/all/c2/all/c58/1141,1142,1143,1144,1145,1146,1147,1148,1149,1150,1151,1152,1153,1154,1155,6802,6803,77579,92963,92964,92965"
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
-  #url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/11852,12785/p/last/c2/6794/c58/",faixa_etaria)
-  url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/11852,12785/p/all/c2/all/c58/1143,1144,1145,1146,1147,1148,1149,1150,1151,3302,73770")
+  url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/11852,12785/p/all/c2/all/c58/1141,1142,1143,1144,1145,1146,1147,1148,1149,1150,1151,1152,1153,1154,1155,6802,6803,77579,92963,92964,92965")
+  resposta <- GET(url)
+  conteudo <- content(resposta, as = "text", encoding = "UTF-8")
+  dados_json <- fromJSON(conteudo)
+  write.csv2(dados_json,paste("dados_brutos/pcd/sidra/pcd_",tabela,"_",trimws(cod_mun),".csv"))
+}
+
+
+#   Tabela 10126 - Pessoas residentes de 2 anos ou mais de idade, total e pessoas com deficiência, por cor ou raça
+tabela <- as.character("10126")
+
+#"https://apisidra.ibge.gov.br/values/t/10126/n6/1100015/v/11852,12785/p/all/c86/all"
+"https://apisidra.ibge.gov.br/values/t/10126/n6/1100015/v/11852,12785/p/all/c86/allxt" # Sem o Total, dá confusão com o Sexo
+for (i in seq_len(nrow(municipios))) {
+
+  cod_mun <- municipios$codigo_ibge[i]
+  nome_mun <- municipios$nome[i]
+  url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/11852,12785/p/all/c86/allxt")
   resposta <- GET(url)
   conteudo <- content(resposta, as = "text", encoding = "UTF-8")
   dados_json <- fromJSON(conteudo)
@@ -39,11 +55,9 @@ for (i in seq_len(nrow(municipios))) {
 
 
 "https://apisidra.ibge.gov.br/values/t/10127/n1/all/n6/2600054/v/11852,12785/p/all/c1509/73771,73772,73773,73789,73790"
-
-# Tabela 10127 - Pessoas residentes de 2 anos ou mais de idade com deficiência por tipos de dificuldades funcionais
-tabela <- as.character("10127") 
+tabela <- as.character("10127")
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/11852,12785/p/all/c1509/73771,73772,73773,73789,73790")
@@ -58,7 +72,7 @@ for (i in seq_len(nrow(municipios))) {
 
 tabela <- as.character("10139") #   Tabela 9884 - População residente em favelas e comunidades urbanas, por cor ou raça, sexo e grupos de idade, segundo as Favelas e Comunidades Urbanas
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/all/p/all/c2/allxt/c58/95253/c839/46583/d/v12805%202")
@@ -74,7 +88,7 @@ for (i in seq_len(nrow(municipios))) {
 
 tabela <- as.character("10140") #   Tabela 9884 - População residente em favelas e comunidades urbanas, por cor ou raça, sexo e grupos de idade, segundo as Favelas e Comunidades Urbanas
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/all/p/all/c86/2776%202777%202778%202779%202780/c58/allxt/c839/46583/d/v12805%202")
@@ -88,7 +102,7 @@ for (i in seq_len(nrow(municipios))) {
 "https://apisidra.ibge.gov.br/values/t/10138/n6/1100015/v/12789/p/all/c11322/all/c58/95253/c839/allxt"
 tabela <- as.character("10138") #   Tabela 9884 - População residente em favelas e comunidades urbanas, por cor ou raça, sexo e grupos de idade, segundo as Favelas e Comunidades Urbanas
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/12789/p/all/c11322/all/c58/95253/c839/allxt")
@@ -103,7 +117,7 @@ for (i in seq_len(nrow(municipios))) {
 "https://apisidra.ibge.gov.br/values/t/10141/n6/1100015/v/all/p/all/c2/allxt/c1568/allxt/c839/46583/d/v10270%202"
 tabela <- as.character("10141") #   Tabela 9884 - População residente em favelas e comunidades urbanas, por cor ou raça, sexo e grupos de idade, segundo as Favelas e Comunidades Urbanas
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/all/p/all/c2/allxt/c1568/allxt/c839/46583/d/v10270%202")
@@ -119,7 +133,7 @@ for (i in seq_len(nrow(municipios))) {
 
 tabela <- as.character("10143") #   Tabela 9884 - População residente em favelas e comunidades urbanas, por cor ou raça, sexo e grupos de idade, segundo as Favelas e Comunidades Urbanas
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/381,382/p/all/c2044/allxt")
@@ -133,7 +147,7 @@ for (i in seq_len(nrow(municipios))) {
 "https://apisidra.ibge.gov.br/values/t/10147/n6/1100015/v/13267/p/all/c86/allxt"
 tabela <- as.character("10147") #   Tabela 9884 - População residente em favelas e comunidades urbanas, por cor ou raça, sexo e grupos de idade, segundo as Favelas e Comunidades Urbanas
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/13267/p/all/c86/allxt")
@@ -147,7 +161,7 @@ for (i in seq_len(nrow(municipios))) {
 "https://apisidra.ibge.gov.br/values/t/10145/n6/1100015/v/13267/p/all/c2/allxt/c58/allxt"
 tabela <- as.character("10145") #   Tabela 9884 - População residente em favelas e comunidades urbanas, por cor ou raça, sexo e grupos de idade, segundo as Favelas e Comunidades Urbanas
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/13267/p/all/c2/allxt/c58/allxt")
@@ -163,7 +177,7 @@ for (i in seq_len(nrow(municipios))) {
 
 tabela <- as.character("10153") #   Tabela 9884 - População residente em favelas e comunidades urbanas, por cor ou raça, sexo e grupos de idade, segundo as Favelas e Comunidades Urbanas
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/1643,13310/p/all/c2/allxt/c1568/allxt")
@@ -177,7 +191,7 @@ for (i in seq_len(nrow(municipios))) {
 "https://apisidra.ibge.gov.br/values/t/10146/n6/1100015/v/12789,13271/p/all/c11322/allxt/c58/95253"
 tabela <- as.character("10146") #   Tabela 9884 - População residente em favelas e comunidades urbanas, por cor ou raça, sexo e grupos de idade, segundo as Favelas e Comunidades Urbanas
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/12789,13271/p/all/c11322/allxt/c58/95253")
@@ -194,7 +208,7 @@ for (i in seq_len(nrow(municipios))) {
 
 tabela <- as.character("9884") #   Tabela 9884 - População residente em favelas e comunidades urbanas, por cor ou raça, sexo e grupos de idade, segundo as Favelas e Comunidades Urbanas
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/allxp/p/all/c86/95251/c2/6794/c58/95253")
@@ -211,7 +225,7 @@ for (i in seq_len(nrow(municipios))) {
 "https://apisidra.ibge.gov.br/values/t/9514/n1/all/n6/1100015/v/allxp/p/all/c2/allxt/c287/6557,6558,6559,6560,6561,6653,49108,49109,60040,60041,93084,93085,93086,93087,93088,93089,93090,93091,93092,93093,93094,93095,93096,93097,93098/c286/113635"
 tabela <- as.character("9514") #   População residente, por sexo, idade e forma de declaração da idade
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/allxp/p/all/c2/allxt/c287/6557,6558,6559,6560,6561,6653,49108,49109,60040,60041,93084,93085,93086,93087,93088,93089,93090,93091,93092,93093,93094,93095,93096,93097,93098/c286/113635")
@@ -227,7 +241,7 @@ for (i in seq_len(nrow(municipios))) {
 
 tabela <- as.character("9606") #  População residente, por cor ou raça, segundo o sexo e a idade
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/allxp/p/last%201/c86/all/c2/6794/c287/6557,6558,6559,6560,6561,6653,49108,49109,60040,93084,93085,93086,93087,93088,93089,93090,93091,93092,93093,93094,93095,93096,93097,93098")
@@ -243,7 +257,7 @@ for (i in seq_len(nrow(municipios))) {
 "https://apisidra.ibge.gov.br/values/t/9542/n1/all/n6/1100031/v/allxp/p/all/c59/allxt/c2/allxt/c86/all/c287/100362"
 tabela <- as.character("9542") # Tabela 9542 - Pessoas de 15 anos ou mais de idade, total e as alfabetizadas, por sexo, cor ou raça e grupos de idade
 for (i in seq_len(nrow(municipios))) {
-  
+
   cod_mun <- municipios$codigo_ibge[i]
   nome_mun <- municipios$nome[i]
   url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/allxp/p/all/c59/allxt/c2/allxt/c86/all/c287/100362")

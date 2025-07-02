@@ -43,13 +43,13 @@ numeros_unicos <- unique(df_arquivos$tabela)
 
 for (num in numeros_unicos) {
   arquivos_grupo <- df_arquivos %>% filter(tabela == num)
-  
+
   # Lê e concatena todos os arquivos deste grupo
   df_grupo <- map_dfr(
     arquivos_grupo$arquivo,
     ~ ler_arquivo(.x, num)
   )
-  
+
   # Armazena na lista
   lista_dfs[[num]] <- df_grupo
 }
