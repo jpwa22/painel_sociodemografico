@@ -81,6 +81,21 @@ for (i in seq_len(nrow(municipios))) {
   write.csv2(dados_json,paste("dados_brutos/pcd/sidra/pcd_",tabela,"_",trimws(cod_mun),".csv"))
 }
 
+# Tabela 10135 |## Total sem desagrupar ##|- Taxa de analfabetismo das pessoas de 15 anos ou mais de idade por grupo de idade, cor ou raça, sexo e existência de deficiência
+"https://apisidra.ibge.gov.br/values/t/10135/n6/1100015/v/all/p/all/c58/95253/c86/95251/c2/6794/c839/all/d/v10267%202"
+
+tabela <- as.character("10135")
+for (i in seq_len(nrow(municipios))) {
+
+  cod_mun <- municipios$codigo_ibge[i]
+  nome_mun <- municipios$nome[i]
+  url <- paste0("https://apisidra.ibge.gov.br/values/t/",tabela,"/n6/",cod_mun, "/v/all/p/all/c58/95253/c86/95251/c2/6794/c839/all/d/v10267%202")
+  resposta <- GET(url)
+  conteudo <- content(resposta, as = "text", encoding = "UTF-8")
+  dados_json <- fromJSON(conteudo)
+  write.csv2(dados_json,paste("dados_brutos/pcd/sidra/pcd_",tabela,"_","Total",trimws(cod_mun),".csv"))
+}
+
 
 # Taxa de escolarização das pessoas de 6 anos ou mais de idade, por sexo, grupos de idade e existência de deficiência
 "https://apisidra.ibge.gov.br/values/t/10139/n6/1100015/v/all/p/all/c2/allxt/c58/95253/c839/46583/d/v12805%202"

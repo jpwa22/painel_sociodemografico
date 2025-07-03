@@ -63,14 +63,14 @@ print(df_final)
 
 sidra <- df_final
 sidra |> glimpse()
-sidra <- sidra |> select(D1C,D2N,D4N,D5N,D6N,V,MN,tabela)
+sidra <- sidra |> select(D1C,D2N,D4N,D5N,D6N,D7N,V,MN,tabela)
 
 sidra <- sidra |> mutate(V = as.numeric(str_replace(V,"-","")))
 
 sidra_rotulos <- unique(sidra |> filter(D1C == "Município (Código)"))
 sidra <- sidra |> filter(D1C != "Município (Código)")
-sidra <- sidra |> mutate(Atributo = paste(D2N,"|",D4N,"|",D5N,"|",D6N))
-
+sidra <- sidra |> mutate(Atributo = paste(D2N,"|",D4N,"|",D5N,"|",D6N,"|",D7N)
+                        )
 
 write_xlsx(sidra,"dados_brutos/pcd/sidra.xlsx")
 write_xlsx(sidra_rotulos,"dados_brutos/pcd/sidra_rotulos.xlsx")
